@@ -98,23 +98,31 @@ posts.forEach((element) =>{
 
 let likePost = [];
 
-function like(){
-    let likeButton = document.querySelectorAll(`.like-button.js-like-button`);
-    let likes = document.querySelectorAll('.js-likes-counter');
-    const jsLikeButton = document.querySelector(".like-button__label");
+const buttons = document.getElementsByClassName("like-button");
 
-    
-    for (let i = 0; i < posts.length; i++) {
-        likes[i].innerHTML = posts[i].likes;
-        likeButton[i].addEventListener(`click`, () => {
+for (let i = 0; i < buttons.length; i++) {
+    const currentButton = buttons[i];
 
-            posts[i].likes++;
-            likes[i].innerHTML = posts[i].likes;
-            jsLikeButton.style.color = 'blue';
-            likePost.push(posts[i].id);
+    currentButton.addEventListener('click', function(e){
+        e.preventDefault();
+        const clickedClass = "like-button--liked";
+        const contatori = document.getElementsByClassName("js-likes-counter");
+
+        if (!currentButton.classList.contains(clickedClass)) {
+            currentButton.classList.contains(clickedClass);
+            currentButton.classList.add(clickedClass);
+            let likes = parseInt(contatori[i].innerText);
+            likes++;
+            contatori[i].innerText = likes;
+            likePost.push(i)
             console.log(likePost)
-        })
-    }
-}
+        } else {
+            currentButton.classList.remove(clickedClass);
+            let likes = parseInt(contatori[i].innerText);
+            likes--;
+            contatori[i].innerText = likes;
+        }
 
-like();
+    })
+    
+}
